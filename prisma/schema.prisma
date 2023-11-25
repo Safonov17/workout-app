@@ -76,7 +76,7 @@ model ExerciseTime {
   repeat      Int     @default(0)
   isCompleted Boolean @default(false) @map("is_completed")
 
-  ExerciseLog   ExerciseLog? @relation(fields: [exerciseLogId], references: [id])
+  exerciseLog   ExerciseLog? @relation(fields: [exerciseLogId], references: [id])
   exerciseLogId Int?         @map("exercise_log_id")
 
   @@map("Exercise_time")
