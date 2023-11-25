@@ -2,8 +2,8 @@ import asyncHandler from 'express-async-handler'
 
 import { prisma } from '../prisma.js'
 
-// @desc Create user exercise
-// @route POST /api/exercise
+// @desc Create new exercise
+// @route POST /api/exercises
 // @access Private
 export const createNewExercise = asyncHandler(async (req, res) => {
 	const { name, times, iconPath } = req.body
@@ -62,7 +62,7 @@ export const deleteExercise = asyncHandler(async (req, res) => {
 	}
 })
 
-// @desc Getting all the exercises
+// @desc Get exercises
 // @route GET /api/exercises
 // @access Private
 export const getExercises = asyncHandler(async (req, res) => {
