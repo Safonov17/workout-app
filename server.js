@@ -3,7 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import express from 'express'
 import morgan from 'morgan'
-import path, { join } from 'path'
+import path from 'path'
 
 import { errorHandler, notFound } from './app/middleware/error.middleware.js'
 
