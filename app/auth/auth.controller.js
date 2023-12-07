@@ -1,9 +1,11 @@
 import { faker } from '@faker-js/faker'
 import { hash, verify } from 'argon2'
 import asyncHandler from 'express-async-handler'
+
 import { prisma } from '../prisma.js'
-import { generateToken } from './generate-token.js'
 import { UserFields } from '../utils/user.utils.js'
+
+import { generateToken } from './generate-token.js'
 
 // @desc authUser
 // @route POST /api/auth/login
@@ -49,7 +51,8 @@ export const registerUser = asyncHandler(async (req, res) => {
 		data: {
 			email,
 			password: await hash(password),
-			name: faker.name.fullName()
+			name: faker.name.fullName(),
+			images: ['/images/before.jpg', '/images/after.jpg']
 		},
 		select: UserFields
 	})
