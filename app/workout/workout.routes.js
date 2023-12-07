@@ -8,6 +8,7 @@ import { createNewWorkoutLog } from './log/workout-log.controller.js'
 import {
 	createNewWorkout,
 	deleteWorkout,
+	getWorkout,
 	getWorkouts,
 	updateWorkout
 } from './workout.controller.js'
@@ -15,9 +16,10 @@ import {
 const router = express.Router()
 
 router.route('/').post(protect, createNewWorkout).get(protect, getWorkouts)
+
 router
 	.route('/:id')
-	.get(protect, getWorkouts)
+	.get(protect, getWorkout)
 	.put(protect, updateWorkout)
 	.delete(protect, deleteWorkout)
 
