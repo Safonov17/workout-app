@@ -1,12 +1,11 @@
-import { Prisma } from '@prisma/client'
 import asyncHandler from 'express-async-handler'
 
 import { prisma } from '../prisma.js'
 import { UserFields } from '../utils/user.utils.js'
 
-// @desc Get user profile
-// @route GET /api/users/profile
-// @access Private
+// @desc    Get user profile
+// @route   GET /api/users/profile
+// @access  Private
 export const getUserProfile = asyncHandler(async (req, res) => {
 	const user = await prisma.user.findUnique({
 		where: {
@@ -22,13 +21,14 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 		}
 	})
 
-	const kgs = await prisma.ExerciseTime.aggregate({
+	const kgs = await prisma.exerciseTime.aggregate({
 		where: {
 			exerciseLog: {
 				userId: req.user.id
 			},
 			isCompleted: true
 		},
+
 		_sum: {
 			weight: true
 		}
@@ -41,19 +41,21 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 		}
 	})
 
-	res.json(
+	res.json({
 		...user,
-		{
-			label: 'Minutes',
-			value: Math.ceil(countExerciseTimesCompleted * 2.3) || 0
-		},
-		{
-			label: 'Workouts',
-			value: workouts
-		},
-		{
-			label: 'Kgs',
-			value: kgs._sum.weight || 0
-		}
-	)
+		statistics: [
+			{
+				label: 'Minutes',
+				value: Math.ceil(countExerciseTimesCompleted * 2.3) || 0
+			},
+			{
+				label: 'Workouts',
+				value: workouts
+			},
+			{
+				label: 'Kgs',
+				value: kgs._sum.weight || 0
+			}
+		]
+	})
 })
