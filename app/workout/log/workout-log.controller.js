@@ -2,9 +2,9 @@ import asyncHandler from 'express-async-handler'
 
 import { prisma } from '../../prisma.js'
 
-// @desc Create new workout log
-// @route POST /api/workouts/log/:workoutId
-// @access Private
+// @desc    Create new workout log
+// @route   POST /api/workouts/log/:id
+// @access  Private
 export const createNewWorkoutLog = asyncHandler(async (req, res) => {
 	const workoutId = +req.params.id
 
@@ -12,6 +12,7 @@ export const createNewWorkoutLog = asyncHandler(async (req, res) => {
 		where: {
 			id: workoutId
 		},
+
 		include: {
 			exercises: true
 		}
@@ -19,7 +20,7 @@ export const createNewWorkoutLog = asyncHandler(async (req, res) => {
 
 	if (!workout) {
 		res.status(404)
-		throw new Error('Workout not found')
+		throw new Error('Workout not found!')
 	}
 
 	const workoutLog = await prisma.workoutLog.create({
